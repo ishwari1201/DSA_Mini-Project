@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1f2937 0%, #0f172a 100%);
+  color: #f3f4f6;
+  text-align: center;
+  padding: 30px;
+}
+
+/* Common Layout */
+.processing-container {
+  background: #1e293b;
+  padding: 25px;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  max-width: 700px;
+  border: 1px solid #334155;
+}
+
+.control-buttons button {
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+button:nth-of-type(1) {
+  background-color: #3b82f6;
+  color: #fff;
+}
+button:nth-of-type(2) {
+  background-color: #ef4444;
+  color: #fff;
+}
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* Stack Styles */
+.stack-pot {
+  width: 120px;
+  height: 350px;
+  background: #334155;
+  border: 4px solid #64748b;
+  border-top: 8px solid #64748b;
+  border-radius: 5px;
+  margin: 30px auto;
+  position: relative;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+.stack-label {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #34d399;
+  font-weight: 700;
+}
+
+/* Queue Styles */
+.queue-container {
+  width: 90%;
+  max-width: 700px;
+  height: 80px;
+  background: repeating-linear-gradient(90deg, #1f2937, #1f2937 10px, #0f172a 10px, #0f172a 20px);
+  border: 4px solid #64748b;
+  border-radius: 10px;
+  margin: 30px auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.queue-label-front,
+.queue-label-back {
+  position: absolute;
+  top: -25px;
+  font-weight: 600;
+  color: #34d399;
+}
+.queue-label-front {
+  left: 0;
+}
+.queue-label-back {
+  right: 0;
+}
+.queue-label-front::before {
+  content: "FRONT (Exit)";
+  color: #cbd5e1;
+}
+.queue-label-back::before {
+  content: "BACK (Entry)";
+  color: #cbd5e1;
+}
+
+/* Cargo Block */
+.block {
+  width: 60px;
+  height: 60px;
+  background: #facc15;
+  color: #1f2937;
+  font-weight: 700;
+  line-height: 60px;
+  border-radius: 4px;
+  position: absolute;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border: 2px solid #a16207;
+  transition: all 0.2s ease;
+}
+.block:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Animations --- */
+@keyframes flyInStack {
+  0% {
+    bottom: 450px;
+    opacity: 0;
+    transform: translateX(-50%) rotate(-30deg);
+  }
+  80% {
+    transform: translateX(-50%) rotate(5deg);
+  }
+  100% {
+    bottom: var(--end-bottom);
+    opacity: 1;
+    transform: translateX(-50%) rotate(0deg);
+  }
+}
+.flyInStack {
+  animation: flyInStack 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes flyOutStack {
+  0% {
+    bottom: var(--end-bottom);
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+  100% {
+    bottom: 450px;
+    opacity: 0;
+    transform: translateX(-50%) rotate(60deg) scale(0.7);
+  }
+}
+.flyOutStack {
+  animation: flyOutStack 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+@keyframes slideInQueue {
+  0% {
+    left: -70px;
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    left: var(--end-left);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.slideInQueue {
+  animation: slideInQueue 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes flyOutQueue {
+  0% {
+    left: var(--end-left);
+    opacity: 1;
+  }
+  100% {
+    left: 850px;
+    opacity: 0;
+    transform: rotate(5deg) scale(1.2);
+  }
+}
+.flyOutQueue {
+  animation: flyOutQueue 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
