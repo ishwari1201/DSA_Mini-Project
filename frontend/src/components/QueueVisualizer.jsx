@@ -5,6 +5,19 @@ function QueueVisualizer() {
   const [queue, setQueue] = useState([]);
   const [animating, setAnimating] = useState(false);
   const MAX_SIZE = 6;
+  const saveToDB = async (value) => {
+    try {
+      const res = await fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: "QueueUser", score: value }),
+      });
+      const data = await res.json();
+      console.log("Saved to DB:", data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const enqueue = () => {
     if (animating) return;
@@ -14,7 +27,7 @@ function QueueVisualizer() {
     setAnimating(true);
     const newQueue = [...queue, { value, anim: "in" }];
     setQueue(newQueue);
-
+ saveToDB(value);
     setTimeout(() => {
       newQueue[newQueue.length - 1].anim = "";
       setQueue([...newQueue]);

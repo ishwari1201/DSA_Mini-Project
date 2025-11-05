@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect("mongodb+srv://ishwari:root@isha.qs9kt0p.mongodb.net/?appName=isha")
+  .connect("mongodb+srv://ishwari:root@isha.qs9kt0p.mongodb.net/gamified_learning?appName=isha")
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.log(err));
 

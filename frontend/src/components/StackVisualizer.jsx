@@ -6,6 +6,20 @@ function StackVisualizer() {
   const [animating, setAnimating] = useState(false);
   const MAX_SIZE = 6;
 
+    const saveToDB = async (value) => {
+    try {
+      const res = await fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: "StackUser", score: value }),
+      });
+      const data = await res.json();
+      console.log("Saved to DB:", data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const push = () => {
     if (animating) return;
     if (stack.length >= MAX_SIZE) return alert("⚠️ Stack Tower full!");
@@ -14,14 +28,24 @@ function StackVisualizer() {
 
     const newStack = [...stack, { value, anim: "in" }];
     setStack(newStack);
-
+    saveToDB(value);
     setTimeout(() => {
       newStack[newStack.length - 1].anim = "";
       setStack([...newStack]);
       setAnimating(false);
     }, 800);
   };
-
+const deleteFromDB = async (value) => {
+  try {
+    await fetch("http://localhost:5000/users", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: "StackUser" }), // or identify the item uniquely
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
   const pop = () => {
     if (animating) return;
     if (stack.length === 0) return alert("⚠️ Stack Underflow!");
@@ -35,6 +59,7 @@ function StackVisualizer() {
       newStack.pop();
       setStack([...newStack]);
       setAnimating(false);
+      deleteFromDB();
     }, 800);
   };
 
